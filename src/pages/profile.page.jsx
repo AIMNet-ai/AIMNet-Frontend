@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { imgArr } from "./../data/userimages";
-import fire from "./../firebase/fire";
 import { getUserData, updateUserData } from "./../firebase/user";
 import Spinner from "react-bootstrap/Spinner";
 
@@ -41,10 +40,6 @@ export default function ProfileV() {
   };
 
   const updateData = () => {
-    fire.auth().currentUser.updateProfile({
-      photoURL: user.profilePic,
-    });
-
     updateUserData(
       uid,
       user,
@@ -58,24 +53,7 @@ export default function ProfileV() {
     );
   };
 
-  useEffect(() => {
-    fire.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        //console.log(user);
-        setuid(user.uid);
-        getUserData(
-          user.uid,
-          (data) => {
-            setintialdata(data);
-            setuser(data);
-          },
-          (err) => seterror(err)
-        );
-      } else {
-        //console.log("No Auth Changed");
-      }
-    });
-  }, []);
+  useEffect(() => {}, []);
   //To Stop displaying the popup after 3 sec
   useEffect(() => {
     if (error) {

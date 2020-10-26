@@ -11,9 +11,8 @@ export default function NavbarV({ onSetSidebarOpen, balance }) {
           className='fa fa-bars'
           style={{ fontSize: "30px" }}
           onClick={() => onSetSidebarOpen(true)}></i>
-        <h3 className='bg-success p-2 text-white'>Balance : ${balance}</h3>
         <Link className='navbar-brand text-white d-flex' to='/'>
-          <h3 className='m-2 brand-name-ress'>Vasooli</h3>
+          <h3 className='m-2 brand-name-ress'>AIMNet.ai</h3>
           <img
             src={icon}
             width='50'

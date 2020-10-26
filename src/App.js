@@ -1,24 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Routes from "./routes";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+  useLocation,
+} from "react-router-dom";
+
+import Sidebar from "react-sidebar";
+import NavbarV from "./components/general/navbar.component";
+import SidebarV from "./components/general/sidebar.component";
+import FooterV from "./components/general/footer.component";
+
+const mql = window.matchMedia(`(min-width: 800px)`);
 
 function App() {
+  const [dock, setdock] = useState(mql.matches);
+  const [Sidebaropen, setSidebaropen] = useState(false);
+  const [user, setuser] = useState({});
+  const [Balance, setBalance] = useState(0);
+  const [dp, setdp] = useState(0);
+  const [loggedin, setloggedin] = useState(false);
+
+  const onSetSidebarOpen = (open) => {
+    setSidebaropen(open);
+  };
+
+  const cleanuser = () => {
+    setloggedin(false);
+    setBalance(0);
+    setuser({});
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Sidebar
+        sidebar={
+          <SidebarV
+            control={onSetSidebarOpen}
+            user={user}
+            dp={dp}
+            cleanuser={cleanuser}
+            loggedin={loggedin}
+          />
+        }
+        open={Sidebaropen}
+        docked={dock}
+        touch={true}
+        onSetOpen={onSetSidebarOpen}>
+        <NavbarV onSetSidebarOpen={onSetSidebarOpen} balance={Balance} />
+        <div className='container p-3' style={{ marginBottom: "80px" }}>
+          <Routes />
+        </div>
+      </Sidebar>
+    </Router>
   );
 }
 

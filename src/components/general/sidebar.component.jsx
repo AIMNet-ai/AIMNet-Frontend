@@ -66,25 +66,25 @@ export default function SidebarV({ control, cleanuser, user, loggedin, dp }) {
         <div className='card-text'>
           <ul className='list-group list-group-flush'>
             <Link
-              to='/dashboard'
+              to='/new'
               className='list-group-item'
               onClick={() => control(false)}>
-              <i className='fa fa-area-chart' style={IconStyling}></i>
-              Dashboard
+              <i className='fa fa-plus-circle' style={IconStyling}></i>
+              Create New Track
             </Link>
             <Link
-              to='/transactions'
+              to='/app'
               className='list-group-item'
               onClick={() => control(false)}>
-              <i className='fa fa-exchange' style={IconStyling}></i>
-              Transactions
+              <i className='fa fa-music' style={IconStyling}></i>
+              All Tracks
             </Link>
             <Link
-              to='/vasooli'
+              to='/favorites'
               className='list-group-item'
               onClick={() => control(false)}>
-              <i className='fa fa-handshake-o' style={IconStyling}></i>
-              Vasooli
+              <i className='fa fa-heartbeat' style={IconStyling}></i>
+              Favorites
             </Link>
             <Link
               to='/profile'
@@ -92,13 +92,6 @@ export default function SidebarV({ control, cleanuser, user, loggedin, dp }) {
               onClick={() => control(false)}>
               <i className='fa fa-user' style={IconStyling}></i>
               Profile
-            </Link>
-            <Link
-              to='/notif'
-              className='list-group-item'
-              onClick={() => control(false)}>
-              <i className='fa fa-bell' style={IconStyling}></i>
-              Notifications
             </Link>
           </ul>
         </div>
