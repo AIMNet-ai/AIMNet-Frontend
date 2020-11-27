@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { imgArr } from "./../data/userimages";
-import { getUserData, updateUserData } from "./../firebase/user";
+import { getUserData, updateUserData } from "../helpers/user";
 import Spinner from "react-bootstrap/Spinner";
 
 export default function ProfileV() {
@@ -91,7 +91,7 @@ export default function ProfileV() {
             <div className='col-md-4 d-flex flex-column'>
               <img
                 src={imgArr[parseInt(user.profilePic)]}
-                alt='Profile Picture of the User'
+                alt='Profile of the User'
                 className='w-50 m-auto'
               />
               <div className='form-group'>

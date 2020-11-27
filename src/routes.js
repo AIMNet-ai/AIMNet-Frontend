@@ -10,23 +10,63 @@ import {
 import LoginV from "./pages/login.page";
 import SignupV from "./pages/signup.page";
 import ProfileV from "./pages/profile.page";
+import Abcjs from "react-abcjs";
+import Player from "./player/player";
+import ReactABCPlayer from "./player/react-abc-player";
 
-function Routes() {
+import AllTracks from "./pages/alltracks.page";
+
+function Routes({ loggedin, setuser, setloggedin }) {
   return (
     <Switch>
-      <Route path='/dashboard'>This is dashboard</Route>
-      <Route path='/new'>New Track</Route>
-      <Route path='/favorites'>favorites Track</Route>
+      <Route path='/new'>
+        {loggedin ? (
+          "New Track"
+        ) : (
+          <LoginV setuser={setuser} setloggedin={setloggedin} />
+        )}
+      </Route>
+      <Route path='/favorites'>
+        {loggedin ? (
+          "favorites Track"
+        ) : (
+          <LoginV setuser={setuser} setloggedin={setloggedin} />
+        )}
+      </Route>
+      <Route path='/player'>
+        <Player />
+      </Route>
+      <Route path='/player2'>
+        <ReactABCPlayer />
+      </Route>
       <Route path='/login'>
-        <LoginV />
+        {loggedin ? (
+          "Dashboard"
+        ) : (
+          <LoginV setuser={setuser} setloggedin={setloggedin} />
+        )}
       </Route>
       <Route path='/signup'>
-        <SignupV />
+        {loggedin ? (
+          "Dashboard"
+        ) : (
+          <SignupV setuser={setuser} setloggedin={setloggedin} />
+        )}
       </Route>
       <Route path='/profile'>
-        <ProfileV />
+        {loggedin ? (
+          <ProfileV />
+        ) : (
+          <LoginV setuser={setuser} setloggedin={setloggedin} />
+        )}
       </Route>
-      <Route path='/'>Root line</Route>
+      <Route path='/'>
+        {loggedin ? (
+          <AllTracks />
+        ) : (
+          <LoginV setuser={setuser} setloggedin={setloggedin} />
+        )}
+      </Route>
     </Switch>
   );
 }

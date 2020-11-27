@@ -1,7 +1,7 @@
 import React, { useState, Fragment, useEffect } from "react";
-import { FBlogin } from "./../firebase/user";
-import { Link, useLocation } from "react-router-dom";
-export default function LoginV() {
+import { FBlogin } from "../helpers/user";
+import { Link, Redirect, useLocation } from "react-router-dom";
+export default function LoginV({setuser:setuserprop,setloggedin}) {
   const [user, setuser] = useState({
     email: "",
     password: "",
@@ -35,6 +35,8 @@ export default function LoginV() {
       (user) => {
         //console.log("User Logged In");
         setsuccess(true);
+        setuserprop(user);
+        setloggedin(true)
       },
       (error) => {
         seterror(true);
@@ -64,41 +66,49 @@ export default function LoginV() {
   useEffect(() => {}, [loc.pathname]);
 
   return (
-    <Fragment>
-      {success && sucessAlert()}
-      {error && errorAlert()}
-      <div className='card col-md-6 p-2 m-auto'>
-        <h4>Vasooli - Login</h4>
-        <div className='form-group'>
-          <label>Email address</label>
-          <input
-            type='email'
-            className='form-control'
-            placeholder='Enter email'
-            name='email'
-            value={user.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className='form-group'>
-          <label>Password</label>
-          <input
-            type='password'
-            className='form-control'
-            id='exampleInputPassword1'
-            placeholder='Password'
-            name='password'
-            value={user.password}
-            onChange={handleChange}
-          />
-        </div>
-        <button className='btn btn-primary w-75 m-auto m-2' onClick={onSubmit}>
-          Log In
-        </button>
-        <p className='m-auto p-2'>
-          Don't have an account <Link to='/signup'>Create one here</Link>
-        </p>
-      </div>
-    </Fragment>
+    <>
+      {!success ? (
+        <Fragment>
+          {success && sucessAlert()}
+          {error && errorAlert()}
+          <div className='card col-md-6 p-2 m-auto'>
+            <h4>Login to AIMNet</h4>
+            <div className='form-group'>
+              <label>Email address</label>
+              <input
+                type='email'
+                className='form-control'
+                placeholder='Enter email'
+                name='email'
+                value={user.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label>Password</label>
+              <input
+                type='password'
+                className='form-control'
+                id='exampleInputPassword1'
+                placeholder='Password'
+                name='password'
+                value={user.password}
+                onChange={handleChange}
+              />
+            </div>
+            <button
+              className='btn btn-primary w-75 m-auto m-2'
+              onClick={onSubmit}>
+              Log In
+            </button>
+            <p className='m-auto p-2'>
+              Don't have an account <Link to='/signup'>Create one here</Link>
+            </p>
+          </div>
+        </Fragment>
+      ) : (
+        <Redirect to='/' />
+      )}
+    </>
   );
 }

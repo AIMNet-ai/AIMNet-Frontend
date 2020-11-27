@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Routes from "./routes";
 import {
   BrowserRouter as Router,
@@ -31,8 +31,17 @@ function App() {
   const cleanuser = () => {
     setloggedin(false);
     setBalance(0);
+    localStorage.removeItem("aimnet-user");
     setuser({});
   };
+
+  useEffect(() => {
+    let userLocal = localStorage.getItem("aimnet-user");
+    if (userLocal) {
+      setuser(JSON.parse(userLocal));
+      setloggedin(true);
+    }
+  }, []);
 
   return (
     <Router>
@@ -52,7 +61,7 @@ function App() {
         onSetOpen={onSetSidebarOpen}>
         <NavbarV onSetSidebarOpen={onSetSidebarOpen} balance={Balance} />
         <div className='container p-3' style={{ marginBottom: "80px" }}>
-          <Routes />
+          <Routes loggedin={loggedin} setuser={setuser} setloggedin={setloggedin}/>
         </div>
       </Sidebar>
     </Router>

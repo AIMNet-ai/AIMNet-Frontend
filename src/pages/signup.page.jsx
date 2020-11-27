@@ -1,9 +1,9 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { FBsignup } from "./../firebase/user";
+import { FBsignup } from "../helpers/user";
 import { Link } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 
-export default function SignupV({ setdp }) {
+export default function SignupV({ setdp, setuser: setuserprop, setloggedin }) {
   const [user, setuser] = useState({
     email: "",
     fullName: "",
@@ -65,8 +65,11 @@ export default function SignupV({ setdp }) {
         },
         (user, dp) => {
           setsuccess(true);
+          setuserprop(user);
+
           setdp(dp);
           console.log(user);
+          setloggedin(true);
         },
         (err) => {
           seterror(true);
@@ -80,7 +83,7 @@ export default function SignupV({ setdp }) {
       {success && sucessAlert()}
       {error && errorAlert()}
       <div className='card col-md-6 p-2 m-auto'>
-        <h4>Vasooli - Sign up form</h4>
+        <h4>AIMNet AI Registration Form</h4>
         <div className='form-group'>
           <label>Email address</label>
           <input

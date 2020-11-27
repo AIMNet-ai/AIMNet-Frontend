@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Link } from "react-router-dom";
 import { imgArr } from "./../../data/userimages";
-import { FBlogout } from "./../../firebase/user";
+import { FBlogout } from "./../../helpers/user";
 import { Button } from "react-bootstrap";
 import "./sidebar.style.css";
 const IconStyling = {
@@ -32,7 +32,7 @@ export default function SidebarV({ control, cleanuser, user, loggedin, dp }) {
             <img
               className='card-img-top'
               src={imgArr[parseInt(dp)]}
-              alt='Card image cap'
+              alt='Card cap'
               id={user.uid}
               style={{
                 borderRadius: "50%",
