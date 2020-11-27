@@ -3,14 +3,14 @@ import { imgArr } from "./../data/userimages";
 import { getUserData, updateUserData } from "../helpers/user";
 import Spinner from "react-bootstrap/Spinner";
 
-export default function ProfileV() {
+export default function ProfileV({ user: userprop }) {
   const [user, setuser] = useState({
     email: "",
-    fullName: "",
-    profilePic: "",
-    address: "",
+    name: "",
+    username: "",
+    bio: "",
+    profilePic: 0,
   });
-  const [intialdata, setintialdata] = useState({});
   const [uid, setuid] = useState("");
   const [error, seterror] = useState(false);
   const [success, setsuccess] = useState(false);
@@ -36,12 +36,12 @@ export default function ProfileV() {
   );
 
   const resetForm = () => {
-    setuser(intialdata);
+    setuser(userprop);
   };
 
   const updateData = () => {
     updateUserData(
-      uid,
+      userprop,
       user,
       () => {
         setsuccess(true);
@@ -53,7 +53,10 @@ export default function ProfileV() {
     );
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setuser(userprop);
+  }, []);
+
   //To Stop displaying the popup after 3 sec
   useEffect(() => {
     if (error) {
@@ -132,23 +135,36 @@ export default function ProfileV() {
                   <input
                     type='text'
                     className='form-control'
-                    value={user.fullName}
-                    name='fullName'
+                    value={user.name}
+                    name='name'
                     onChange={handleChange}
                     placeholder='John Doe'
                   />
                 </div>
               </div>
               <div className='form-group row'>
-                <label className='col-sm-2 col-form-label'>Address </label>
+                <label className='col-sm-2 col-form-label'>Username </label>
                 <div className='col-sm-10'>
                   <input
                     type='text'
                     className='form-control'
-                    value={user.address}
-                    name='address'
+                    value={user.username}
+                    name='username'
                     onChange={handleChange}
-                    placeholder='780 Street John Doe house , Dist-Jalgaon,MH'
+                    placeholder='@JohnDoe'
+                  />
+                </div>
+              </div>
+              <div className='form-group row'>
+                <label className='col-sm-2 col-form-label'>Bio </label>
+                <div className='col-sm-10'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    value={user.bio}
+                    name='bio'
+                    onChange={handleChange}
+                    placeholder='Life is one grand sweet song so start the music'
                   />
                 </div>
               </div>

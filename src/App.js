@@ -8,7 +8,7 @@ import {
   Redirect,
   useLocation,
 } from "react-router-dom";
-
+import axios from "axios";
 import Sidebar from "react-sidebar";
 import NavbarV from "./components/general/navbar.component";
 import SidebarV from "./components/general/sidebar.component";
@@ -21,7 +21,7 @@ function App() {
   const [Sidebaropen, setSidebaropen] = useState(false);
   const [user, setuser] = useState({});
   const [Balance, setBalance] = useState(0);
-  const [dp, setdp] = useState(0);
+  const [dp, setdp] = useState(user.profilePic);
   const [loggedin, setloggedin] = useState(false);
 
   const onSetSidebarOpen = (open) => {
@@ -38,8 +38,18 @@ function App() {
   useEffect(() => {
     let userLocal = localStorage.getItem("aimnet-user");
     if (userLocal) {
+      const apiUrl = `http://localhost:5000/api`;
       setuser(JSON.parse(userLocal));
-      setloggedin(true);
+      axios
+        .post(`${apiUrl}/getprofile`, {
+          email: JSON.parse(userLocal).email,
+        })
+        .then((res) => {
+          setloggedin(true);
+          setuser(res.data);
+          setdp(res.data.profilePic);
+          localStorage.setItem("aimnet-user", JSON.stringify(res.data));
+        });
     }
   }, []);
 
@@ -61,7 +71,12 @@ function App() {
         onSetOpen={onSetSidebarOpen}>
         <NavbarV onSetSidebarOpen={onSetSidebarOpen} balance={Balance} />
         <div className='container p-3' style={{ marginBottom: "80px" }}>
-          <Routes loggedin={loggedin} setuser={setuser} setloggedin={setloggedin}/>
+          <Routes
+            loggedin={loggedin}
+            setuser={setuser}
+            setloggedin={setloggedin}
+            user={user}
+          />
         </div>
       </Sidebar>
     </Router>

@@ -45,8 +45,23 @@ export const getUserData = (uid, successFn, errorFn) => {};
 
 //Updating Document in FB Firestore
 export const updateUserData = (
-  uid,
-  { email, fullName, profilePic, address },
+  userprop,
+  { email, name, username, bio, profilePic },
   successFn,
   errorFn
-) => {};
+) => {
+  axios
+    .post(`${apiUrl}/updateprofile`, {
+      email: userprop.email,
+      name: name,
+      username: username,
+      profilePic: profilePic,
+      bio: bio,
+    })
+    .then((d) => {
+      successFn();
+    })
+    .catch((err) => {
+      errorFn();
+    });
+};

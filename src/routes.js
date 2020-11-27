@@ -10,34 +10,31 @@ import {
 import LoginV from "./pages/login.page";
 import SignupV from "./pages/signup.page";
 import ProfileV from "./pages/profile.page";
-import Abcjs from "react-abcjs";
-import Player from "./player/player";
-import ReactABCPlayer from "./player/react-abc-player";
 
 import AllTracks from "./pages/alltracks.page";
+import CreateNew from "./pages/createNew.page";
+import Player from "./components/general/Player.component";
 
-function Routes({ loggedin, setuser, setloggedin }) {
+function Routes({ loggedin, setuser, setloggedin, user }) {
+  const [music, setmusic] = useState({
+    title: "Default title",
+    notation: "CDEF GABc|",
+  });
   return (
     <Switch>
       <Route path='/new'>
         {loggedin ? (
-          "New Track"
+          <CreateNew user={user} />
         ) : (
           <LoginV setuser={setuser} setloggedin={setloggedin} />
         )}
       </Route>
       <Route path='/favorites'>
         {loggedin ? (
-          "favorites Track"
+          <AllTracks flag={1} user={user} setmusic={setmusic} />
         ) : (
           <LoginV setuser={setuser} setloggedin={setloggedin} />
         )}
-      </Route>
-      <Route path='/player'>
-        <Player />
-      </Route>
-      <Route path='/player2'>
-        <ReactABCPlayer />
       </Route>
       <Route path='/login'>
         {loggedin ? (
@@ -55,14 +52,21 @@ function Routes({ loggedin, setuser, setloggedin }) {
       </Route>
       <Route path='/profile'>
         {loggedin ? (
-          <ProfileV />
+          <ProfileV user={user} />
         ) : (
           <LoginV setuser={setuser} setloggedin={setloggedin} />
         )}
       </Route>
-      <Route path='/'>
+      <Route path='/test'>
         {loggedin ? (
-          <AllTracks />
+          <Player user={user} notation={music.notation} title={music.title} />
+        ) : (
+          <LoginV setuser={setuser} setloggedin={setloggedin} />
+        )}
+      </Route>
+      <Route path='/*'>
+        {loggedin ? (
+          <AllTracks user={user} setmusic={setmusic} />
         ) : (
           <LoginV setuser={setuser} setloggedin={setloggedin} />
         )}

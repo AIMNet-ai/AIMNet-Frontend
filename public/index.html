@@ -13,49 +13,10 @@
 
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <script src="./abcjs_basic_5.9.1-min.js"></script>
     <title>AIMNet.ai - Artificially Intelligent Music Network</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <script>
-      function selectionCallback(abcelem) {
-        var note = {};
-        for (var key in abcelem) {
-          if (abcelem.hasOwnProperty(key) && key !== "abselem")
-            note[key] = abcelem[key];
-        }
-        console.log(abcelem);
-        var el = document.getElementById("selection");
-        el.innerHTML =
-          "<b>selectionCallback parameter:</b><br>" + JSON.stringify(note);
-      }
-
-      function initEditor() {
-        new ABCJS.Editor("abc", {
-          paper_id: "paper0",
-          synth: {
-            el: "#audio",
-            options: {
-              displayLoop: true,
-              displayRestart: true,
-              displayPlay: true,
-              displayProgress: true,
-              displayWarp: true,
-            },
-          },
-          generate_warnings: true,
-          warnings_id: "warnings",
-          abcjsParams: {
-            generateDownload: true,
-            clickListener: selectionCallback,
-          },
-        });
-        console.log("Loading editior ....");
-      }
-
-      window.addEventListener("load", initEditor, false);
-    </script>
   </body>
 </html>
